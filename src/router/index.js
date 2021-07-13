@@ -1,20 +1,22 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/account/Login.vue'),
+    component: () => import( /* webpackChunkName: "login" */ '../views/account/Login.vue'),
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    path: '/register',
+    name: 'Register',
+    component: () => import( /* webpackChunkName: "about" */ '../views/account/Register.vue'),
   },
   {
     path: '/news',
     name: 'News',
-    component: () => import(/* webpackChunkName: "news" */ '../views/News.vue'),
+    component: () => import( /* webpackChunkName: "news" */ '../views/News.vue'),
   },
 ]
 

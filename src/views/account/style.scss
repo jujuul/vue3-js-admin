@@ -1,0 +1,21 @@
+.account {
+    width: 100vw;
+    height: 100vh;
+    background-color: #282828;
+
+
+    &__form {
+        width: 285px;
+        margin: auto;
+        padding-top: 220px;
+    }
+
+    label {
+        display: block;
+        height: 36px;
+        line-height: 36px;
+        font-size: 14px;
+        color: #fff;
+        text-align: left;
+    }
+}

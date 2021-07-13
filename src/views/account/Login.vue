@@ -1,32 +1,52 @@
 <template>
-  <div class="login">
-    登录
-    <h1>标题</h1>
-    <h2>标题</h2>
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
-    <a-button type="primary">Primary</a-button>
-    <a-button>Default</a-button>
-    <a-button type="dashed">Dashed</a-button>
-    <a-button danger>Danger</a-button>
-    <a-button danger type="primary">Danger</a-button>
-    <a-config-provider :auto-insert-space-in-button="false">
-      <a-button type="primary">按钮</a-button>
-    </a-config-provider>
-    <a-button type="primary">按钮</a-button>
-    <a-button type="link">Link</a-button>
+  <div class="account">
+    <div class="account__form">
+      <a-form name="custom-validation" ref="formRef">
+        <a-form-item>
+          <label>用户名</label>
+          <a-input type="text" autocomplete="off" />
+        </a-form-item>
+        <a-form-item>
+          <label>密码</label>
+          <a-input type="password" autocomplete="off" />
+        </a-form-item>
+        <a-form-item>
+          <Captcha />
+        </a-form-item>
+        <a-form-item>
+          <a-button type="primary" html-type="submit" block>登录</a-button>
+        </a-form-item>
+      </a-form>
+      <div class="text-align fs-12 color-white">
+        <a class="color-white" href="">忘记密码</a> |
+        <router-link class="color-white" to="/register">注册</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { reactive, toRefs } from '@vue/reactivity'
+import Captcha from '@/components/Captcha'
 export default {
-  name: "Login",
-};
+  name: 'Login',
+  components: { Captcha },
+  setup() {
+    const formConfig = reactive({
+      layout: {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 14 },
+      },
+    })
+    const data = toRefs(formConfig)
+    return {
+      formConfig,
+      ...data,
+    }
+  },
+}
 </script>
 
-<style></style>
+<style lang="scss">
+@import './style.scss';
+</style>
