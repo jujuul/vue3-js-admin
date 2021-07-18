@@ -8,7 +8,7 @@
         width: 285px;
         margin: auto;
         padding-top: 220px;
-        text-align: left;
+        // text-align: left;
     }
 
     label {
@@ -19,4 +19,8 @@
         color: #fff;
         text-align: left;
     }
+}
+
+.ant-form-item-explain {
+    text-align: left;
 }

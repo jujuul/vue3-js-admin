@@ -18,7 +18,7 @@
         </a-form-item>
       </a-form>
       <div class="text-align fs-12 color-white">
-        <a class="color-white" href="">忘记密码</a> |
+        <router-link class="color-white" to="/forget">忘记密码</router-link>|
         <router-link class="color-white" to="/register">注册</router-link>
       </div>
     </div>
@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import { reactive, toRefs } from '@vue/reactivity'
-import Captcha from '@/components/Captcha'
+import { reactive, toRefs } from '@vue/reactivity';
+import Captcha from '@/components/Captcha';
 export default {
   name: 'Login',
   components: { Captcha },
@@ -37,14 +37,14 @@ export default {
         labelCol: { span: 4 },
         wrapperCol: { span: 14 },
       },
-    })
-    const data = toRefs(formConfig)
+    });
+    const data = toRefs(formConfig);
     return {
       formConfig,
       ...data,
-    }
+    };
   },
-}
+};
 </script>
 
 <style lang="scss">

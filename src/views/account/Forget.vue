@@ -65,12 +65,13 @@
             @click="handleFinish"
             html-type="submit"
             block
-            >注册
+            >重置密码
           </a-button>
         </a-form-item>
       </a-form>
       <div class="text-align fs-12 color-white">
-        <router-link class="color-white" to="/">登录</router-link>
+        <router-link class="color-white" to="/">登录</router-link>|
+        <router-link class="color-white" to="/register">注册</router-link>
       </div>
     </div>
   </div>
