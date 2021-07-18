@@ -45,7 +45,14 @@
               ></a-input>
             </a-col>
             <a-col :span="10">
-              <a-button type="primary" block>获取验证码</a-button>
+              <a-button
+                type="primary"
+                @click="getCode"
+                :disabled="button_disabled"
+                :loading="button_loading"
+                block
+                >{{ button_text }}</a-button
+              >
             </a-col>
           </a-row>
         </a-form-item>
@@ -72,9 +79,10 @@ import {
   checkPassword,
   checkRePassword,
   checkCode,
-} from '@/utils/validate'
-import { reactive, toRefs } from '@vue/reactivity'
-import Captcha from '@/components/Captcha'
+} from '@/utils/validate';
+import { message } from 'ant-design-vue';
+import { reactive, toRefs } from '@vue/reactivity';
+import Captcha from '@/components/Captcha';
 
 export default {
   name: 'Login',
@@ -83,53 +91,53 @@ export default {
     const validUsername = async (rule, value) => {
       // 校验为空时
       if (!value) {
-        return Promise.reject('请输入用户名')
+        return Promise.reject('请输入用户名');
       } else if (!checkPhone(value)) {
-        return Promise.reject('请输入正确的手机号')
+        return Promise.reject('请输入正确的手机号');
       } else {
-        return Promise.resolve()
+        return Promise.resolve();
       }
-    }
+    };
     const validPassword = async (rule, value) => {
-      const password = formConfig.account_form.password
+      const password = formConfig.account_form.password;
       // 密码为空时
       if (!value) {
-        return Promise.reject('请输入密码')
+        return Promise.reject('请输入密码');
       } else if (!checkPassword(value)) {
-        return Promise.reject('请输入符合格式的密码(数字或字母，6-20位)')
+        return Promise.reject('请输入符合格式的密码(数字或字母，6-20位)');
       } else if (password && value) {
         if (password !== value) {
-          return Promise.reject('两次密码不一致')
+          return Promise.reject('两次密码不一致');
         }
       } else {
-        return Promise.resolve()
+        return Promise.resolve();
       }
-    }
+    };
     const validRePassword = async (rule, value) => {
-      const password = formConfig.account_form.password
+      const password = formConfig.account_form.password;
       // 密码为空时
       if (!value) {
-        return Promise.reject('请输入密码')
+        return Promise.reject('请输入密码');
       } else if (password && value) {
         if (!checkRePassword(password, value)) {
-          return Promise.reject('两次密码不一致')
+          return Promise.reject('两次密码不一致');
         }
       } else {
-        return Promise.resolve()
+        return Promise.resolve();
       }
-    }
+    };
     const validCode = async (rule, value) => {
       if (!value) {
-        return Promise.reject('请输入验证码')
+        return Promise.reject('请输入验证码');
       } else if (!checkCode(value)) {
-        return Promise.reject('请输入6位的验证码')
+        return Promise.reject('请输入6位的验证码');
       } else {
-        return Promise.resolve()
+        return Promise.resolve();
       }
-    }
+    };
     const formState = reactive({
       layout: 'horizontal',
-    })
+    });
     const formConfig = reactive({
       account_form: {
         username: '',
@@ -149,19 +157,46 @@ export default {
         ],
         code: [{ required: true, validator: validCode, trigger: 'blur' }],
       },
-    })
-    const data = toRefs(formConfig)
-    console.log(data)
+    });
+    const dataItem = reactive({
+      button_text: '获取',
+      button_loading: false,
+      button_disabled: false,
+      sec: 3,
+      timer: null,
+    });
+    const form = toRefs(formConfig);
+    const data = toRefs(dataItem);
     const handleFinish = (value) => {
-      console.log(value)
-    }
+      console.log(value);
+    };
+    const getCode = () => {
+      // 如果用户名不存在
+      if (!formConfig.account_form.username) {
+        message.error('请输入用户名');
+        return;
+      }
+      dataItem.timer = setInterval(() => {
+        const s = dataItem.sec--;
+        dataItem.button_text = `${s}秒`;
+        dataItem.button_disabled = true;
+        if (s <= 0) {
+          clearInterval(dataItem.timer);
+          dataItem.button_text = '重新获取';
+          dataItem.button_disabled = false;
+          dataItem.sec = 3;
+        }
+      }, 1000);
+    };
     return {
       handleFinish,
+      ...form,
       ...data,
       formState,
-    }
+      getCode,
+    };
   },
-}
+};
 </script>
 
 <style lang="scss">
